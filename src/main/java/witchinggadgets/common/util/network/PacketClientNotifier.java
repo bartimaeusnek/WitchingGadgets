@@ -35,7 +35,7 @@ public class PacketClientNotifier extends AbstractPacket
 		switch(packetid)
 		{
 		case 0:
-			if(ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "WGFAKEELDRITCHMINOR"))
+			if(ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "ELDRITCHMINOR"))
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
 			else
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];

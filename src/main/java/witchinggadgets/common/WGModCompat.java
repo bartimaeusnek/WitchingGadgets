@@ -32,10 +32,11 @@ public class WGModCompat
 	public static boolean loaded_Enviromine;
 	public static boolean loaded_Railcraft;
 	public static boolean loaded_TT;
-	
+
 	public static boolean loadedTG;
-	
+
 	public static boolean loaded_EnderIO;
+	public static boolean loaded_GregTech;
 
 	public static void init()
 	{
@@ -43,33 +44,25 @@ public class WGModCompat
 		tfRavensFeather = GameRegistry.findItem("TwilightForest", "item.tfFeather");
 		tfMagicMapFocus = GameRegistry.findItem("TwilightForest", "item.magicMapFocus");
 		tfTowerWood = GameRegistry.findBlock("TwilightForest", "tile.TFTowerStone");
-		
+
 		tConResource = GameRegistry.findItem("TConstruct", "materials");
-		
+
 		loaded_TCon = Loader.isModLoaded("TConstruct");
 		loaded_Twilight = Loader.isModLoaded("TwilightForest");
 		loaded_Enviromine = Loader.isModLoaded("enviromine");
 		loaded_Railcraft = Loader.isModLoaded("Railcraft");
 		loaded_TT = Loader.isModLoaded("ThaumicTinkerer");
 		loaded_EnderIO = Loader.isModLoaded("EnderIO");
-		
+		loaded_GregTech = Loader.isModLoaded("gregtech");
+
 		loadedTG = Loader.isModLoaded("TravellersGear");
 
 		if(Loader.isModLoaded("MineTweaker3"))
-			WGMinetweaker.init();	
+			WGMinetweaker.init();
 	}
 
 	public static void addTags()
 	{
-		registerOreDictAspects("nuggetAluminum",new AspectList().add(Aspect.METAL, 1));
-		registerOreDictAspects( "ingotAluminum",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,1));
-		registerOreDictAspects(  "dustAluminum",new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE,1));
-		registerOreDictAspects(   "oreAluminum",new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
-
-		registerOreDictAspects("nuggetAluminium",new AspectList().add(Aspect.METAL, 1));
-		registerOreDictAspects( "ingotAluminium",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,1));
-		registerOreDictAspects(  "dustAluminium",new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE,1));
-		registerOreDictAspects(   "oreAluminium",new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
 
 		registerOreDictAspects("nuggetAluminumBrass",new AspectList().add(Aspect.METAL, 1));
 		registerOreDictAspects( "ingotAluminumBrass",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,2));
@@ -80,6 +73,18 @@ public class WGModCompat
 		registerOreDictAspects( "ingotAluminiumBrass",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,2));
 		registerOreDictAspects(  "dustAluminiumBrass",new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE,2));
 		registerOreDictAspects(   "oreAluminiumBrass",new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 2));
+		if(!loaded_GregTech) {
+		registerOreDictAspects("nuggetAluminum",new AspectList().add(Aspect.METAL, 1));
+		registerOreDictAspects( "ingotAluminum",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,1));
+		registerOreDictAspects(  "dustAluminum",new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE,1));
+		registerOreDictAspects(   "oreAluminum",new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
+
+		registerOreDictAspects("nuggetAluminium",new AspectList().add(Aspect.METAL, 1));
+		registerOreDictAspects( "ingotAluminium",new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE,1));
+		registerOreDictAspects(  "dustAluminium",new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE,1));
+		registerOreDictAspects(   "oreAluminium",new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
+
+
 
 		registerOreDictAspects("nuggetCobalt",new AspectList().add(Aspect.METAL, 1));
 		registerOreDictAspects( "ingotCobalt",new AspectList().add(Aspect.METAL, 3).add(Aspect.FIRE, 1).add(Aspect.MOTION,1));
@@ -97,7 +102,7 @@ public class WGModCompat
 
 		registerOreDictAspects("nuggetPigIron",new AspectList().add(Aspect.METAL, 1));
 		registerOreDictAspects( "ingotPigIron",new AspectList().add(Aspect.METAL, 3).add(Aspect.FLESH, 1));
-
+		}
 
 		if(tConResource != null)
 		{
@@ -134,7 +139,7 @@ public class WGModCompat
 	{
 		if(!loaded_TCon || FluidRegistry.getFluid(fluidName)==null)
 			return;
-		
+
 		try{
 			FluidStack fluid = new FluidStack(FluidRegistry.getFluid(fluidName), fluidAmount);
 
