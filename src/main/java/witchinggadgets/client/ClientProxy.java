@@ -1,5 +1,10 @@
 package witchinggadgets.client;
 
+import baubles.api.BaublesApi;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.particle.EntityLavaFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -40,9 +45,10 @@ import witchinggadgets.client.render.TileRenderLabelLibrary;
 import witchinggadgets.client.render.TileRenderSaunaStove;
 import witchinggadgets.client.render.TileRenderSnowGen;
 import witchinggadgets.client.render.TileRenderSpinningWheel;
+import witchinggadgets.client.render.TileRenderTerraformFocus;
+import witchinggadgets.client.render.TileRenderTerraformer;
 import witchinggadgets.client.render.TileRenderWallMirror;
 import witchinggadgets.common.CommonProxy;
-import witchinggadgets.common.WGConfig;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.blocks.tiles.TileEntityCobbleGen;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
@@ -51,14 +57,11 @@ import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
 import witchinggadgets.common.util.WGKeyHandler;
-import baubles.api.BaublesApi;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends CommonProxy
 {
@@ -79,11 +82,11 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySpinningWheel.class, new TileRenderSpinningWheel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySnowGen.class, new TileRenderSnowGen());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCobbleGen.class, new TileRenderCobbleGen());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCuttingTable.class, new TileRenderCuttingTable());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLabelLibrary.class, new TileRenderLabelLibrary());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySaunaStove.class, new TileRenderSaunaStove());
-
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTerraformer.class, new TileRenderTerraformer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTerraformFocus.class, new TileRenderTerraformFocus());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssentiaPump.class, new TileRenderEssentiaPump());
 
 		eliteArmorModel = ClientUtilities.bindModel("witchinggadgets","models/EliteRunicArmor.obj");
@@ -111,10 +114,7 @@ public class ClientProxy extends CommonProxy
 		FMLCommonHandler.instance().bus().register(new WGKeyHandler());
 		FMLCommonHandler.instance().bus().register(new ClientTickHandler());
 
-		if (WGConfig.enableSearch) {
-			ThaumonomiconIndexSearcher.init();
-		}
-		
+		ThaumonomiconIndexSearcher.init();
 	}
 
 	@Override
@@ -125,11 +125,11 @@ public class ClientProxy extends CommonProxy
 
 		if(ID == 3)return new GuiBag(player.inventory, world);
 		if(ID==4||ID==5)return new GuiCloakBag(player.inventory, world, ID==4?TravellersGearAPI.getExtendedInventory(player)[0]:BaublesApi.getBaubles(player).getStackInSlot(3) );
-		
+
 		if(ID == 6)return new GuiPatchedFocusPouch(player.inventory, world, x, y, z);
 
 		if(ID == 7)return new GuiPrimordialGlove(player.inventory, world, x, y, z);
-		
+
 		if(ID == 8)return new GuiLabelLibrary(player.inventory, (TileEntityLabelLibrary)tile);
 
 		if(ID == 9)return new GuiCuttingTable(player.inventory, (TileEntityCuttingTable)tile);
@@ -164,7 +164,7 @@ public class ClientProxy extends CommonProxy
 	}
 	@Override
 	public void createFurnaceOutputBlobFx(World worldObj, int x, int y, int z, ForgeDirection facing)
-	{	
+	{
 		float xx = x+.5f+facing.offsetX*1.66f + worldObj.rand.nextFloat()*.3f;
 		float zz = z+.5f+facing.offsetZ*1.66f + worldObj.rand.nextFloat()*.3f;
 
@@ -178,7 +178,7 @@ public class ClientProxy extends CommonProxy
 	}
 	@Override
 	public void createFurnaceDestructionBlobFx(World worldObj, int x, int y, int z)
-	{	
+	{
 		float xx = x+.5f+ worldObj.rand.nextFloat()*.3f;
 		float zz = z+.5f+ worldObj.rand.nextFloat()*.3f;
 

@@ -52,6 +52,8 @@ import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import witchinggadgets.common.blocks.tiles.TileEntityVoidWalkway;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
@@ -179,42 +181,42 @@ public class WGContent
 
 		//enchants
 		int enchId = WGConfig.getEnchantmentID(64, "Gemstone Potency");
-		
+
 		if (WGConfig.moduleGemcutting) {
-			
+
 			if(enchId>0)
 				enc_gemstonePotency = new WGEnchantGemPotency(enchId, 4);
-			
+
 			enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Brittle");
 			if(enchId>0)
 				enc_gemstoneBrittle = new WGEnchantGemBrittle(enchId, 1);
 		}
-		
+
 		enchId = WGConfig.getEnchantmentID(enchId, "Invisible Gear");
 		if(enchId>0)
 			enc_invisibleGear = new WGEnchantInvisibleGear(enchId);
-		
+
 		enchId = WGConfig.getEnchantmentID(enchId, "Unveiling");
 		if(enchId>0)
 			enc_unveiling = new WGEnchantUnveiling(enchId);
-		
+
 		enchId = WGConfig.getEnchantmentID(enchId, "Stealth");
 		if(enchId>0)
 			enc_stealth = new WGEnchantStealth(enchId);
-		
+
 		enchId = WGConfig.getEnchantmentID(enchId, "Backstab");
 		if(enchId>0)
 			enc_backstab = new WGEnchantBackstab(enchId);
-		
+
 		enchId = WGConfig.getEnchantmentID(enchId, "Ride Protection");
 		if(enchId>0)
 			enc_rideProtect = new WGEnchantRideProtect(enchId);
-		
+
 		//TODO attempt soulBound integration
 		enchId = WGConfig.getEnchantmentID(enchId, "Soulbound");
 		if(enchId>0)
 			enc_soulbound = new WGEnchantSoulbound(enchId);
-		
+
 	}
 	public static void postInit()
 	{
@@ -271,7 +273,8 @@ public class WGContent
 		registerTile(TileEntityLabelLibrary.class);
 		//METAL
 		registerTile(TileEntityEssentiaPump.class);
-
+		registerTile(TileEntityTerraformer.class);
+		registerTile(TileEntityTerraformFocus.class);
 
 		//GameRegistry.registerTileEntity(TileEntityTotem.class, "TileEntityTotem");
 		//GameRegistry.registerTileEntity(TileEntityEssentiaVapourizer.class, "TileEntityEssentiaVapourizer");
@@ -290,7 +293,7 @@ public class WGContent
 					int pos = yy*9 + zz*3 + xx;
 					if(rc)
 						TileEntityBlastfurnace.brickBlock[pos] = GameRegistry.findBlock("Railcraft","brick.infernal");
-					else			
+					else
 						TileEntityBlastfurnace.brickBlock[pos] = pos<9&&pos!=4?Blocks.nether_brick: pos==10||pos==12||pos==13||pos==14||pos==16?Blocks.soul_sand: Blocks.obsidian;
 				}
 
@@ -313,7 +316,7 @@ public class WGContent
 		ItemMagicFoodstuffs = new ItemMagicFood().setUnlocalizedName("WG_MagicFood");
 		GameRegistry.registerItem(ItemMagicFoodstuffs, ItemMagicFoodstuffs.getUnlocalizedName());
 
-		
+
 		ItemMagicalBaubles = new ItemMagicalBaubles().setUnlocalizedName("WG_Baubles");
 		GameRegistry.registerItem(ItemMagicalBaubles, ItemMagicalBaubles.getUnlocalizedName());
 
@@ -324,23 +327,23 @@ public class WGContent
 			ItemBag = new ItemBag().setUnlocalizedName("WG_Bag");
 			GameRegistry.registerItem(ItemBag, ItemBag.getUnlocalizedName());
 		}
-				
+
 		if (WGConfig.moduleCloak) {
 			ItemCloak = (ItemCloak) new ItemCloak().setUnlocalizedName("WG_Cloak");
 			GameRegistry.registerItem(ItemCloak, ItemCloak.getUnlocalizedName());
-			
+
 			if (WGConfig.moduleKama) {
 				ItemKama = (ItemKama) new ItemKama().setUnlocalizedName("WG_Kama");
 				GameRegistry.registerItem(ItemKama, ItemKama.getUnlocalizedName());
 			}
 		}
-		
+
 		if (WGConfig.modulePrimal) {
 			if (WGConfig.moduleGemcutting) {
 				ItemPrimordialGlove = new ItemPrimordialGlove().setUnlocalizedName("WG_PrimordialGlove");
 				GameRegistry.registerItem(ItemPrimordialGlove, ItemPrimordialGlove.getUnlocalizedName());
 			}
-			
+
 			ItemPrimordialHammer = new ItemPrimordialHammer(primordialTool).setUnlocalizedName("WG_PrimordialHammer");
 			GameRegistry.registerItem(ItemPrimordialHammer, ItemPrimordialHammer.getUnlocalizedName());
 			ItemPrimordialAxe = new ItemPrimordialAxe(primordialTool).setUnlocalizedName("WG_PrimordialAxe");
@@ -362,25 +365,25 @@ public class WGContent
 		if (WGConfig.moduleGemcutting) {
 			ItemCapsule = new ItemCrystalCapsule().setUnlocalizedName("WG_CrystalFlask");
 			GameRegistry.registerItem(ItemCapsule, ItemCapsule.getUnlocalizedName());
-			
+
 			ItemInfusedGem = new ItemInfusedGem().setUnlocalizedName("WG_InfusedGem");
 			GameRegistry.registerItem(ItemInfusedGem, ItemInfusedGem.getUnlocalizedName());
 
 		}
-		
-		
+
+
 		if(WGConfig.allowClusters)
 		{
 			ItemCluster = new ItemClusters().setUnlocalizedName("WG_Cluster");
 			GameRegistry.registerItem(ItemCluster, ItemCluster.getUnlocalizedName());
 		}
-		
+
 		//ItemMagicBed = new ItemMagicBed(WGConfig.ItemMagicBedID).setUnlocalizedName("WG_MagicBed");
 		//GameRegistry.registerItem(ItemMagicBed, ItemMagicBed.getUnlocalizedName());
-		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("blockVoidMetal", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("voidblock", new ItemStack(BlockMetalDevice,1,1));
+		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,7));
+		OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice,1,7));
+		OreDictionary.registerOre("blockVoidMetal", new ItemStack(BlockMetalDevice,1,7));
+		OreDictionary.registerOre("voidblock", new ItemStack(BlockMetalDevice,1,7));
 		OreDictionary.registerOre("crystalNetherQuartz", new ItemStack(Items.quartz));
 		OreDictionary.registerOre("scribingTools", new ItemStack(ConfigItems.itemInkwell,1,OreDictionary.WILDCARD_VALUE));
 	}
@@ -388,7 +391,7 @@ public class WGContent
 	{
 		WGResearch.recipeList.put("THAUMIUMSHEARS", GameRegistry.addShapedRecipe(new ItemStack(ItemThaumiumShears), " t", "t ", 't', ItemApi.getItem("itemResource", 2)));
 
-		BlockDispenser.dispenseBehaviorRegistry.putObject(ItemCapsule, new ItemCrystalCapsule.CapsuleDispenserBehaviour());	    
+		BlockDispenser.dispenseBehaviorRegistry.putObject(ItemCapsule, new ItemCrystalCapsule.CapsuleDispenserBehaviour());
 
 		GameRegistry.addRecipe(new RobeColourizationRecipe());
 		GameRegistry.addRecipe(new CloakColourizationRecipe());
@@ -400,7 +403,7 @@ public class WGContent
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockMetalDevice,1,1), "vvv","vvv","vvv", 'v',"ingotVoid"));
 		ItemStack voidIngot = OreDictionary.getOres("ingotVoid").get(0);
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(voidIngot.getItem(),9,voidIngot.getItemDamage()), "blockVoid"));
-		
+
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemMagicFoodstuffs,1,0), Items.nether_wart,Items.sugar);
 		GameRegistry.addShapedRecipe(new ItemStack(ItemMagicFoodstuffs,1,1), "nnn","www", 'n',new ItemStack(ItemMagicFoodstuffs,1,0), 'w', Items.wheat);
 
@@ -420,6 +423,8 @@ public class WGContent
 		ChestGenHooks.getInfo(ChestGenHooks.VILLAGE_BLACKSMITH).addItem(new WeightedRandomChestContent(new ItemStack(ItemMaterial,1,8),1,1,8));
 
 		InfernalBlastfurnaceRecipe.tryAddIngotImprovement("Iron", "Steel", false);
+		if(Loader.isModLoaded("gregtech")||WGModCompat.loaded_Twilight)
+		InfernalBlastfurnaceRecipe.tryAddIngotImprovement("Thaumium", "Steeleaf", true);
 		//InfernalBlastfurnaceRecipe.tryAddSpecialOreMelting("Tungsten","Tungsten",true);
 		//InfernalBlastfurnaceRecipe.tryAddSpecialOreMelting("Rutile","Titanium",true);
 	}
@@ -470,14 +475,14 @@ public class WGContent
 		ThaumcraftApi.registerObjectTag(new ItemStack(ItemMagicFoodstuffs,1,2),addAspects);
 
 
-		
+
 				//Biomes o' Plenty
 				ThaumcraftApi.registerObjectTag("gemAmber", new AspectList().add(Aspect.TRAP, 2).add(Aspect.CRYSTAL, 2));
 				ThaumcraftApi.registerObjectTag("gemPeridot", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
 				ThaumcraftApi.registerObjectTag("gemTopaz", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
 				ThaumcraftApi.registerObjectTag("gemTanzanite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
 				ThaumcraftApi.registerObjectTag("gemMalachite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
-		
+
 				//Botania
 				addOreAspects("Manasteel", new AspectList().add(Aspect.MAGIC, 1), false);
 				addOreAspects("Terrasteel", new AspectList().add(Aspect.EARTH, 1).add(Aspect.MAGIC, 1), false);
@@ -509,7 +514,7 @@ public class WGContent
 				ThaumcraftApi.registerObjectTag("rune"+"Autumn"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.FIRE,3).add(Aspect.AIR,3).add(Aspect.PLANT, 3));
 				ThaumcraftApi.registerObjectTag("rune"+"Winter"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.WATER,3).add(Aspect.EARTH,3).add(Aspect.COLD, 3));
 				ThaumcraftApi.registerObjectTag("rune"+"Mana"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,8).add(Aspect.MAGIC,6));
-		
+
 				ThaumcraftApi.registerObjectTag("rune"+"Lust"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.AIR,6).add(Aspect.EARTH,3).add(Aspect.getAspect("luxuria"),4));
 				ThaumcraftApi.registerObjectTag("rune"+"Gluttony"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.FIRE,3).add(Aspect.EARTH,3).add(Aspect.WATER,3).add(Aspect.getAspect("gula"),4));
 				ThaumcraftApi.registerObjectTag("rune"+"Greed"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.WATER,6).add(Aspect.FIRE,3).add(Aspect.GREED,4));
@@ -517,7 +522,7 @@ public class WGContent
 				ThaumcraftApi.registerObjectTag("rune"+"Wrath"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.EARTH,6).add(Aspect.WATER,3).add(Aspect.getAspect("ira"),4));
 				ThaumcraftApi.registerObjectTag("rune"+"Envy"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.WATER,6).add(Aspect.EARTH,3).add(Aspect.getAspect("invidia"),4));
 				ThaumcraftApi.registerObjectTag("rune"+"Pride"+"B", new AspectList().add(Aspect.EARTH,2).add(Aspect.METAL,2).add(Aspect.CRYSTAL,4).add(Aspect.EARTH,3).add(Aspect.AIR,3).add(Aspect.FIRE,3).add(Aspect.getAspect("superbia"),4));
-		
+
 				//Tcon
 				addOreAspects("Aluminum", new AspectList().add(Aspect.AIR, 1), false);
 				addOreAspects("Aluminium", new AspectList().add(Aspect.AIR, 1), false);
@@ -528,18 +533,18 @@ public class WGContent
 				addOreAspects("Ardite", new AspectList().add(Aspect.EARTH, 1).add(Aspect.FIRE, 1), true);
 				addOreAspects("Manyullyn", new AspectList().add(Aspect.MAGIC, 2).add(Aspect.FIRE, 1), true);
 				addOreAspects("PigIron", new AspectList().add(Aspect.FLESH, 1), false);
-		
+
 				//Metallurgy
 				addOreAspects("Hepatizon", new AspectList().add(Aspect.GREED, 1).add(Aspect.TOOL, 1), false);
 				addOreAspects("DamascusSteel", new AspectList().add(Aspect.ORDER, 1).add(Aspect.TOOL, 1), false);
 				addOreAspects("Angmallen", new AspectList().add(Aspect.GREED, 1), false);
 				addOreAspects("Manganese", new AspectList().add(Aspect.ORDER, 1), false);
-		
+
 				addOreAspects("Zinc", new AspectList().add(Aspect.ORDER, 1), false);
 				addOreAspects("Brass", new AspectList().add(Aspect.CRAFT, 1), false);
 				addOreAspects("Electrum", new AspectList().add(Aspect.ENERGY, 1), false);
 				addOreAspects("Platinum", new AspectList().add(Aspect.GREED, 1), false);
-		
+
 				addOreAspects("Ignatius", new AspectList().add(Aspect.FIRE, 2), false);
 				addOreAspects("ShadowIron", new AspectList().add(Aspect.DARKNESS, 1).add(Aspect.FIRE, 1), false);
 				addOreAspects("Lemurite", new AspectList().add(Aspect.ORDER, 1).add(Aspect.FIRE, 1), false);
@@ -553,7 +558,7 @@ public class WGContent
 				addOreAspects("Amordrine", new AspectList().add(Aspect.SOUL, 1).add(Aspect.GREED, 1).add(Aspect.FIRE, 1), true);
 				addOreAspects("Vulcanite", new AspectList().add(Aspect.FIRE, 2), false);
 				addOreAspects("Sanguinite", new AspectList().add(Aspect.HUNGER, 1).add(Aspect.FIRE, 1), false);
-		
+
 				addOreAspects("Prometheum", new AspectList().add(Aspect.EARTH, 1), false);
 				addOreAspects("DeepIron", new AspectList().add(Aspect.ENTROPY, 1), false);
 				addOreAspects("Infuscolium", new AspectList().add(Aspect.ENERGY, 1), false);
@@ -570,7 +575,7 @@ public class WGContent
 				addOreAspects("Adamantine", new AspectList().add(Aspect.MIND, 1), false);
 				addOreAspects("Atlarus", new AspectList().add(Aspect.FLESH, 1), false);
 				addOreAspects("Tartarite", new AspectList().add(Aspect.FLESH, 1).add(Aspect.HUNGER, 1), false);
-		
+
 				addOreAspects("Eximite", new AspectList().add(Aspect.ELDRITCH, 2), true);
 				addOreAspects("Meutoite", new AspectList().add(Aspect.VOID, 2), true);
 				addOreAspects("Desichalkos", new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.VOID, 2), true);
