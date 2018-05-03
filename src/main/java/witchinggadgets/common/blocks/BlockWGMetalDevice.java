@@ -46,7 +46,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 			"tfFocusMushroom",
 			"tfFocusRiver",//10
 			"tfFocusOcean",
-			"tfFocusEnd"//12
+			"tfFocusEnd",//12
+			"tfFocusMagic"
 			};
 	IIcon[] icons = new IIcon[subNames.length];
 
@@ -63,7 +64,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
     {
         return worldObj.getBlockMetadata(x, y, z)==1;
     }
-	
+
 	@Override
 	public int damageDropped(int meta)
 	{
@@ -71,12 +72,9 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 	}
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister)
-	{	
+	{
 		for(int i=0;i<icons.length;i++)
 		{
-			if(i==1)
-				icons[i] = iconRegister.registerIcon("thaumcraft:metalbase");
-			else
 				icons[i] = iconRegister.registerIcon("witchinggadgets:"+subNames[i]);
 		}
 	}
@@ -161,7 +159,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 		default:
 			return new TileEntityTerraformFocus();
 		}
-		
+
 	}
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list)
@@ -196,7 +194,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 	{
 		return BlockRenderMetalDevice.renderID;
 	}
-	
+
 	@Override
 	public Aspect requiredAspect(World world, int x, int y, int z)
 	{
@@ -230,6 +228,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return BiomeGenBase.ocean;
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return BiomeGenBase.sky;
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+				return ThaumcraftWorldGenerator.biomeMagicalForest;
 		}
 		return null;
 	}
@@ -257,6 +257,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return new ItemStack(Blocks.lapis_block);
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return new ItemStack(Blocks.end_stone);
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+				return new ItemStack(ConfigBlocks.blockMagicalLog,1,1);
 		}
 		return null;
 }
@@ -283,9 +285,11 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return Aspect.WATER;
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return Aspect.ELDRITCH;
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+				return Aspect.HEAL;
 		}
 		return null;
 	}
 
-	
+
 }

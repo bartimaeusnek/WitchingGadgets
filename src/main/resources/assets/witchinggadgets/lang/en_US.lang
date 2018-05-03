@@ -32,7 +32,7 @@ tile.WG_MetalDevice.tfFocusMushroom.name=Terrestrial Focus: Mushroom Island
 tile.WG_MetalDevice.tfFocusRiver.name=Terrestrial Focus: River
 tile.WG_MetalDevice.tfFocusOcean.name=Terrestrial Focus: Ocean
 tile.WG_MetalDevice.tfFocusEnd.name=Terrestrial Focus: End
-
+tile.WG_MetalDevice.tfFocusMagic.name=Terrestrial Focus: Magical Forest
 tile.WG_RoseVine.name=Rose Vines
 tile.WG_CustomAir.name=Glimmer of Light
 
@@ -578,8 +578,15 @@ witchinggadgets_research_page.TERRAFORMFOCUS_TAINT.1=That's it. You pretty much 
 witchinggadgets_research_name.TERRAFORMFOCUS_END=Terrestrial Focus: End
 witchinggadgets_research_text.TERRAFORMFOCUS_END=[WG] Screw the End
 witchinggadgets_research_page.TERRAFORMFOCUS_END.1=Somehow i get the feeling this wont END well, cold Astroids and Enderman.<BR>...<BR>Supply this with §5Alienis§0 essentia and live in a cold and lonely place.
-
-
+witchinggadgets_research_name.TERRAFORMFOCUS_MAGIC=Terrestrial Focus: Magical Forest
+witchinggadgets_research_text.TERRAFORMFOCUS_MAGIC=[WG] It's a kind of magic
+witchinggadgets_research_page.TERRAFORMFOCUS_MAGIC.1=The world is full of magic, but you've never found much of it at some place, so it's time to create a whole magical biome.<BR>Supply this with §cSano§0 feel the magic arround you.
+witchinggadgets_research_name.TERRAFORMFOCUS_RIVER=Terrestrial Focus: River
+witchinggadgets_research_text.TERRAFORMFOCUS_RIVER=[WG] Down by the river
+witchinggadgets_research_page.TERRAFORMFOCUS_RIVER.1=A River! <BR> That's maybe useful for... something. <BR> Just feed it with §bAqua§0 essentia and go swimming.
+witchinggadgets_research_name.TERRAFORMFOCUS_OCEAN=Terrestrial Focus: Ocean
+witchinggadgets_research_text.TERRAFORMFOCUS_OCEAN=[WG] Aah, Aqua Creepers!
+witchinggadgets_research_page.TERRAFORMFOCUS_OCEAN.1= Upgrade you River focus to Ocean level and enjoy those legendary aqua creepers. <BR>Just feed this thing with some §bAqua§0 essentia and have fun with your new creeper friends. 
 
 
 # ADVANCED SCRIBING TOOLS

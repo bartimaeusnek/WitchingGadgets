@@ -9,10 +9,10 @@ public class WGEnchantSoulbound extends Enchantment {
 	public static int id;
 	public WGEnchantSoulbound(int id) {
 		super(id, 0, EnumEnchantmentType.all);
-		this.setName("Soul Tether");
+		this.setName("wg.soulbound");
 		this.id=id;
 	}
-	
+
 	@Override
 	public int getMinEnchantability(int lvl)
 	{
