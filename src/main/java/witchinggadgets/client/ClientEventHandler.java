@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -36,6 +37,7 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.client.gui.GuiResearchBrowser;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import travellersgear.api.RenderTravellersGearEvent;
@@ -171,7 +173,7 @@ public class ClientEventHandler
 			RenderItem ri = RenderItem.getInstance();
 
 			if(WGKeyHandler.gemLock && (mc.thePlayer.getCurrentEquippedItem()==null || !(mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemPrimordialGlove)))
-				WGKeyHandler.gemLock=false;	
+				WGKeyHandler.gemLock=false;
 
 			GL11.glEnable(3042);
 			double rad = 50*WGKeyHandler.gemRadial;
@@ -213,7 +215,7 @@ public class ClientEventHandler
 				double reverseRadius = Math.sqrt(mx*mx + my*my);
 				double reverseAngle = (mx<0?180:0)+Math.abs((mx<0?-180:0)+ (my<0?90:0)+Math.abs((my<0?-90:0)+Math.abs(Math.toDegrees(Math.acos(mx/reverseRadius))-90)));
 				int sel = reverseAngle>288?0: reverseAngle<72?1: 2+(int)((288-reverseAngle)/72);
-				//				
+				//
 				//				mc.fontRenderer.drawString("mPos: "+mx+", "+my+", sel: "+sel, x, y, 0xffffff);
 				GL11.glPushMatrix();
 				for(int g=0;g<gems.length;g++)
@@ -282,7 +284,7 @@ public class ClientEventHandler
 	{
 		int translucency = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_invisibleGear.effectId, event.stack);
 		if(event.stack!=null && (translucency>1 || (translucency>0 && event.entityPlayer.isInvisible())))
-		{	
+		{
 			boolean unveiling = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_unveiling.effectId, Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))>0;
 			if(event.entityPlayer.equals(Minecraft.getMinecraft().thePlayer) || !unveiling )
 				event.result=-2;
@@ -294,7 +296,7 @@ public class ClientEventHandler
 	{
 		int translucency = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_invisibleGear.effectId, event.stack);
 		if(event.stack!=null && (translucency>1 || (translucency>0 && event.entityPlayer.isInvisible())))
-		{	
+		{
 			boolean unveiling = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_unveiling.effectId, Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))>0;
 			if(event.entityPlayer.equals(Minecraft.getMinecraft().thePlayer) || !unveiling )
 				event.shouldRender=false;
@@ -304,34 +306,28 @@ public class ClientEventHandler
 				event.shouldRender=false;
 	}
 
-	//Changes the background image once certain research is unlocked
-	//Commenting out because tab layout changed, but it's a neat piece of code
-	/*@SideOnly(Side.CLIENT)
+
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
 		if(Minecraft.getMinecraft().thePlayer!=null && event.gui instanceof GuiResearchBrowser)
 		{
-			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "WGFAKEELDRITCHMINOR"))
+			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "ELDRITCHMINOR"))
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
 			else
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
 		}
-	}*/
+	}
+
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void initializeIcons(TextureStitchEvent.Post event)
 	{
-		if(Minecraft.getMinecraft().thePlayer != null)
-		{
-			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "WGELDRITCHBASE"))
-				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
-			else
-				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
-		}
 		ItemClusters.setupClusters();
 	}
+
 
 	static float spectralAlpha = .5f;
 	@SideOnly(Side.CLIENT)
